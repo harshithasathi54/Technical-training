@@ -1,0 +1,62 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void mergeFiles(FILE *fptr1, FILE *fptr2, FILE *fptr3) {
+    char ch;
+
+    // Copy contents of first file to third file
+    while ((ch = fgetc(fptr1)) != EOF) {
+        fputc(ch, fptr3);
+    }
+
+    // Copy contents of second file to third file
+    while ((ch = fgetc(fptr2)) != EOF) {
+        fputc(ch, fptr3);
+    }
+}
+
+int main() {
+    FILE *fptr1, *fptr2, *fptr3;
+    char file1[100], file2[100], file3[100];
+
+    printf("Enter the first file name: ");
+    scanf("%99s", file1);
+    printf("Enter the second file name: ");
+    scanf("%99s", file2);
+    printf("Enter the output file name: ");
+    scanf("%99s", file3);
+
+    // Open first file in read mode
+    fptr1 = fopen(file1, "r");
+    if (fptr1 == NULL) {
+        printf("Cannot open file %s\n", file1);
+        exit(EXIT_FAILURE);
+    }
+
+    // Open second file in read mode
+    fptr2 = fopen(file2, "r");
+    if (fptr2 == NULL) {
+        printf("Cannot open file %s\n", file2);
+        fclose(fptr1);
+        exit(EXIT_FAILURE);
+    }
+
+    // Open output file in write mode
+    fptr3 = fopen(file3, "w");
+    if (fptr3 == NULL) {
+        printf("Cannot create file %s\n", file3);
+        fclose(fptr1);
+        fclose(fptr2);
+        exit(EXIT_FAILURE);
+    }
+
+    mergeFiles(fptr1, fptr2, fptr3);
+
+    printf("Files merged successfully into %s\n", file3);
+
+    fclose(fptr1);
+    fclose(fptr2);
+    fclose(fptr3);
+
+    return 0;
+}

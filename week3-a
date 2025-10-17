@@ -1,0 +1,60 @@
+#include <stdio.h>
+#include <string.h>
+
+// Function to get the integer value of a Roman numeral character
+int value(char r) {
+    switch(r) {
+        case 'I': return 1;
+        case 'V': return 5;
+        case 'X': return 10;
+        case 'L': return 50;
+        case 'C': return 100;
+        case 'D': return 500;
+        case 'M': return 1000;
+        default: return 0; // Invalid character
+    }
+}
+
+// Function to convert Roman numeral to integer
+int romanToInt(char *s) {
+    int total = 0;
+    int i;
+    int len = strlen(s);
+
+    for (i = 0; i < len; i++) {
+        int s1 = value(s[i]);
+        if (s1 == 0) {
+            // Invalid character detected
+            return -1;
+        }
+        if (i + 1 < len) {
+            int s2 = value(s[i + 1]);
+            if (s1 >= s2) {
+                total += s1;
+            } else {
+                total += s2 - s1;
+                i++; // Skip next character
+            }
+        } else {
+            total += s1;
+        }
+    }
+    return total;
+}
+
+int main() {
+    char roman[100];
+
+    printf("Enter a Roman numeral: ");
+    scanf("%s", roman);
+
+    int result = romanToInt(roman);
+
+    if (result == -1) {
+        printf("Invalid Roman numeral input.\n");
+    } else {
+        printf("Integer value: %d\n", result);
+    }
+
+    return 0;
+}

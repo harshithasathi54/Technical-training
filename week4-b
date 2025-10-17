@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>   // <--- Add this for strlen
+
+#define MAX_NAME_LEN 50
+
+typedef struct {
+    int id;
+    char name[MAX_NAME_LEN];
+    float marks;
+} Student;
+
+void writeRecords(const char *filename, int n) {
+    FILE *fp = fopen(filename, "wb");
+    if (fp == NULL) {
+        perror("Unable to open file for writing");
+        exit(EXIT_FAILURE);
+    }
+
+    Student s;
+    for (int i = 0; i < n; i++) {
+        printf("Enter details of student %d\n", i + 1);
+
+        printf("ID: ");
+        scanf("%d", &s.id);
+
+        printf("Name: ");
+        getchar();  // consume leftover newline
+        fgets(s.name, MAX_NAME_LEN, stdin);
+
+        size_t len = strlen(s.name);
+        if (len > 0 && s.name[len - 1] == '\n') {
+            s.name[len - 1] = '\0';
+        }
+
+        printf("Marks: ");
+        scanf("%f", &s.marks);
+
+        fwrite(&s, sizeof(Student), 1, fp);
+    }
+
+    fclose(fp);
+}
+
+void readRecords(const char *filename) {
+    FILE *fp = fopen(filename, "rb");
+    if (fp == NULL) {
+        perror("Unable to open file for reading");
+        exit(EXIT_FAILURE);
+    }
+
+    Student s;
+    printf("\nStored Student Records:\n");
+    printf("-----------------------\n");
+    while (fread(&s, sizeof(Student), 1, fp) == 1) {
+        printf("ID: %d\n", s.id);
+        printf("Name: %s\n", s.name);
+        printf("Marks: %.2f\n", s.marks);
+        printf("-----------------------\n");
+    }
+
+    fclose(fp);
+}
+
+int main() {
+    char filename[] = "students.dat";
+    int n;
+
+    printf("How many student records do you want to enter? ");
+    scanf("%d", &n);
+
+    writeRecords(filename, n);
+    readRecords(filename);
+
+    return 0;
+}

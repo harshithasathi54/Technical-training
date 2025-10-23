@@ -1,0 +1,29 @@
+#include <stdio.h>
+
+int main() {
+    int arr[100], n, i, sum = 0;
+    int *ptr;
+
+    // Input size of array
+    printf("Enter number of elements in the array: ");
+    scanf("%d", &n);
+
+    // Input array elements
+    printf("Enter elements of the array:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Pointer pointing to the first element of array
+    ptr = arr;
+
+    // Calculate sum using pointer
+    for (i = 0; i < n; i++) {
+        sum += *(ptr + i);  // Access element using pointer arithmetic
+    }
+
+    // Display sum
+    printf("\nSum of array elements = %d\n", sum);
+
+    return 0;
+}

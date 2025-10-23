@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+// Function to calculate average
+float average(int *arr, int size) {
+    int sum = 0;
+    for (int i = 0; i < size; i++) {
+        sum += *(arr + i);  // Access elements using pointer arithmetic
+    }
+    return (float)sum / size;
+}
+
+int main() {
+    int arr[100], n;
+    float avg;
+
+    // Input size of array
+    printf("Enter number of elements in the array: ");
+    scanf("%d", &n);
+
+    // Input array elements
+    printf("Enter elements of the array:\n");
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    // Function call
+    avg = average(arr, n);
+
+    // Display average
+    printf("\nAverage of array elements = %.2f\n", avg);
+
+    return 0;
+}

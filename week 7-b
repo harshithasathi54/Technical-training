@@ -1,0 +1,46 @@
+#include <stdio.h>
+#include <string.h>
+
+// Union to store bank account information
+union BankAccount {
+    int accountNumber;
+    char accountHolder[50];
+    float balance;
+};
+
+int main() {
+    union BankAccount acc;
+    int choice;
+
+    printf("--- Bank Account Information using Union ---\n");
+    printf("Enter 1 to store Account Number\n");
+    printf("Enter 2 to store Account Holder Name\n");
+    printf("Enter 3 to store Account Balance\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("Enter Account Number: ");
+            scanf("%d", &acc.accountNumber);
+            printf("Stored Account Number: %d\n", acc.accountNumber);
+            break;
+
+        case 2:
+            printf("Enter Account Holder Name: ");
+            scanf("%s", acc.accountHolder);
+            printf("Stored Account Holder Name: %s\n", acc.accountHolder);
+            break;
+
+        case 3:
+            printf("Enter Account Balance: ");
+            scanf("%f", &acc.balance);
+            printf("Stored Account Balance: %.2f\n", acc.balance);
+            break;
+
+        default:
+            printf("Invalid choice!\n");
+    }
+
+    return 0;
+}
